@@ -22,8 +22,23 @@ const SignBox = () => {
     contextRef.current = context
   }, []);
 
-  const startDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const { offsetX, offsetY } = event.nativeEvent;
+  const getEventCoordinates = (event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) {
+      return { offsetX: 0, offsetY: 0 };
+    }
+
+    if ("touches" in event) {
+      const touch = event.touches[0];
+      return { offsetX: touch.clientX - canvas.getBoundingClientRect().left, offsetY: touch.clientY - canvas.getBoundingClientRect().top };
+    } else {
+      return { offsetX: event.nativeEvent.offsetX, offsetY: event.nativeEvent.offsetY };
+    }
+  };
+
+  const startDrawing = (event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const { offsetX, offsetY } =getEventCoordinates(event);
     if (contextRef.current) {
       contextRef.current.beginPath();
       contextRef.current.moveTo(offsetX, offsetY);
@@ -40,9 +55,9 @@ const SignBox = () => {
     setIsDrawing(false);
   }
 
-  const draw = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  const draw = (event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
     if (!isDrawing) return
-    const { offsetX, offsetY } = event.nativeEvent
+    const { offsetX, offsetY } = getEventCoordinates(event)
     if (!contextRef.current) return
     contextRef.current.lineTo(offsetX, offsetY)
     contextRef.current.stroke()
@@ -75,6 +90,9 @@ const SignBox = () => {
         onMouseUp={finishDrawing}
         onMouseMove={draw}
         onMouseLeave={finishDrawing}
+        onTouchStart={startDrawing}
+        onTouchEnd={finishDrawing}
+        onTouchMove={draw}
       />
       <div className="tools">
         <button onClick={clearCanvas}>Borrar todo</button>
