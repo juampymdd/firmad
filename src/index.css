@@ -7,23 +7,22 @@ body{
   margin: 0;
 }
 
-@media (width > 768px) { 
+
+
+.canvas-container {
+  width: 300px;
+  height: 300px;
+  border: 2px solid black;
+  cursor: crosshair
+}  
+
+@media (width >= 768px) { 
   .canvas-container {
-    width: 500px;
+    width: 700px;
     height: 500px;
-    border: 2px solid black;
-    cursor: crosshair
   }  
 }
 
-@media (width <= 768px) { 
-  .canvas-container {
-    width: 100vw;
-    height: 100vw;
-    border: 2px solid black;
-    cursor: crosshair
-  }  
-}
 
 .container{
   width: 100%;

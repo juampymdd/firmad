@@ -11,8 +11,16 @@ const SignBox = () => {
 
     const canvas = canvasRef.current
     if (!canvas) return
-    canvas.width = 500
-    canvas.height = 500
+    
+    const media = window.matchMedia('(min-width: 768px)').matches;
+    console.log({media})
+    if(media){
+      canvas.width = 700
+      canvas.height = 500
+    } else {
+      canvas.width = 300
+      canvas.height = 300
+    }
 
     const context = canvas.getContext("2d")
     if (!context) return;
