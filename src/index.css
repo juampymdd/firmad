@@ -43,6 +43,14 @@ html {
   gap: 10px;
 }
 
+.btn-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

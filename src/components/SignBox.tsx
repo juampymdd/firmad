@@ -102,7 +102,7 @@ const SignBox = () => {
         onTouchEnd={finishDrawing}
         onTouchMove={draw}
       />
-      <div className="tools">
+      <div className="btn-container">
         <button onClick={clearCanvas}>Borrar todo</button>
         <button onClick={saveAsImage}>Guardar como imagen</button>
       </div>
